@@ -31,7 +31,7 @@ async function quest(question: string) {
 
 onMounted(() => {
   const firstQuestion = conversationStore.conversation[0]
-  if (firstQuestion) {
+  if (conversationStore.conversation.length === 1) {
     quest(firstQuestion)
   }
 })
