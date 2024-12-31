@@ -91,22 +91,32 @@ function quest(item: FAQ) {
   console.log('선택한 질문:', item.question)
   conversationStore.addMessage(item.question)
   conversationStore.addMessage(item.answer)
-  router.push({ name: 'chat2' })
+}
+
+const isNextFAQ = ref(false)
+function toggleNextFAQ() {
+  isNextFAQ.value = !isNextFAQ.value
 }
 </script>
 
 <template>
   <div class="box">
-    <div class="left">
+    <div class="head">
       <h1>자주 묻는 질문</h1>
-      <button v-for="item in faqData1" :key="item.id" class="faq" @click="quest(item)">
+      <h6 style="margin-right: 30px">{{ today }}</h6>
+      <button class="nextBT" @click="toggleNextFAQ">
+        {{ isNextFAQ ? '<' : '>' }}
+      </button>
+    </div>
+
+    <div v-if="isNextFAQ">
+      <button v-for="item in faqData2" :key="item.id" class="faq" @click="quest(item)">
         <div class="numbox">{{ item.id }}</div>
         <p>{{ item.question }}</p>
       </button>
     </div>
-    <div class="right">
-      <h6 style="margin-bottom: 20px; text-align: right">{{ today }}</h6>
-      <button v-for="item in faqData2" :key="item.id" class="faq" @click="quest(item)">
+    <div v-else>
+      <button v-for="item in faqData1" :key="item.id" class="faq" @click="quest(item)">
         <div class="numbox">{{ item.id }}</div>
         <p>{{ item.question }}</p>
       </button>
@@ -115,29 +125,28 @@ function quest(item: FAQ) {
 </template>
 
 <style>
+.head {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+}
 .box {
-  width: 70%;
-  height: 210px;
+  width: 75%;
+  height: 250px;
   border: 1px solid #d7d7d7ff;
   border-radius: 10px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
+  padding-left: 50px;
+  padding-top: 10px;
   margin-bottom: 20px;
-}
-.left,
-.right {
-  flex: 1; /* 1:1 비율 설정 */
-  padding: 20px; /* 내부 여백 */
-  display: flex; /* 내부 요소 정렬용 */
-  flex-direction: column; /* 세로 방향으로 정렬 */
-  justify-content: center; /* 세로 중앙 정렬 */
 }
 .box h1 {
   font-size: 12px;
   font-weight: bold;
   color: #ed4b4bff;
-  margin-bottom: 20px;
+  margin-right: 50px;
 }
 .faq {
   display: flex;
@@ -159,13 +168,22 @@ function quest(item: FAQ) {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 24px;
+  width: 15px;
+  height: 18px;
   border: none;
   border-radius: 10px;
   background: #ebf6f2;
   color: #3e7036ff;
   text-align: center;
   margin-right: 6px;
+}
+.nextBT {
+  width: 20px;
+  border-radius: 5px;
+  border: none;
+  background: #ebf6f2;
+  color: rgb(43, 77, 37);
+  cursor: pointer;
+  margin-bottom: 10px;
 }
 </style>
