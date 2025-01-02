@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import ChatRoomComponent from '../ChatView/ChatRoomComponent.vue'
-import FAQComponent from '../ChatView/FAQComponent.vue'
-import InputChatComponent from '../ChatView/InputChatComponent.vue'
+import ChatRoomComponent from './ChatView/ChatRoomComponent.vue'
+import FAQComponent from './ChatView/FAQComponent.vue'
+import InputChatComponent from './ChatView/InputChatComponent.vue'
 
 const chatIsOpen = ref(false)
 
@@ -27,8 +27,8 @@ function toggleFAQ() {
     </div>
     <FAQComponent v-if="isFAQVisible" :toggleFAQ="toggleFAQ" />
     <button class="movechatbot" @click="toggleChat">
-      <img v-if="chatIsOpen" src="../../assets/closeChat.png" style="width: 45px; height: 46px" />
-      <img v-else src="../../assets/openChat.png" style="width: 55px; height: 60px" />
+      <img v-if="chatIsOpen" src="../assets/closeChat.png" style="width: 45px; height: 46px" />
+      <img v-else src="../assets/openChat.png" style="width: 55px; height: 60px" />
     </button>
   </div>
 </template>

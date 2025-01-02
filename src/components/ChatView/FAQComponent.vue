@@ -148,8 +148,8 @@ defineProps<{ toggleFAQ: () => void }>()
   border-bottom: 20px solid rgb(255, 247, 194);
   content: '';
   position: fixed;
-  bottom: 190px;
-  right: 95px;
+  bottom: 182px;
+  right: 100px;
 }
 .head {
   display: flex;
