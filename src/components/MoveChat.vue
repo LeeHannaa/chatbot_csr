@@ -38,7 +38,7 @@ function toggleFAQ() {
   width: 32%;
   height: 70%;
   border-radius: 20px;
-  background-color: rgb(252, 255, 236);
+  background-color: rgb(217, 236, 211);
   border: none;
   cursor: pointer;
   position: fixed;

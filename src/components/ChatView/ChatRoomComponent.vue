@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
+import { nextTick } from 'vue'
 import { useConversationStore } from '../../stores/conversation'
 
 const conversationStore = useConversationStore()
@@ -22,9 +23,14 @@ onBeforeUnmount(() => {
 })
 watch(
   () => conversationStore.formattedConversation,
-  () => {
-    if (chatContainer.value) {
+  async () => {
+    if (chatContainer.value !== null) {
+      await nextTick()
+      console.log('chatContainer.value.scrollTop 전 : ', chatContainer.value.scrollTop)
+      console.log('chatContainer.value.scrollHeight 전 : ', chatContainer.value.scrollHeight)
       chatContainer.value.scrollTop = chatContainer.value.scrollHeight
+      console.log('chatContainer.value.scrollTop 후 : ', chatContainer.value.scrollTop)
+      console.log('chatContainer.value.scrollHeight 후 : ', chatContainer.value.scrollHeight)
     }
   },
 )
@@ -37,9 +43,13 @@ defineProps<{
 <template>
   <div class="room">
     <div class="chatroom" ref="chatContainer">
-      <p v-for="(item, index) in conversationStore.formattedConversation" :key="index">
+      <div
+        v-for="(item, index) in conversationStore.formattedConversation"
+        :key="index"
+        :class="{ user: item.startsWith('Q:'), ai: item.startsWith('A:') }"
+      >
         {{ item }}
-      </p>
+      </div>
     </div>
   </div>
 </template>
@@ -48,18 +58,39 @@ defineProps<{
 .room {
   width: 98%;
   height: 88%;
-  padding: 30px;
+  padding: 20px;
+  padding-right: 5px;
   padding-bottom: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 8px;
-  background: rgb(254, 254, 244);
+  background: rgb(255, 244, 233);
+  border-radius: 10px;
 }
 .chatroom {
   width: 100%;
   max-height: 98%;
   overflow-y: auto;
-  background: rgb(254, 254, 244);
+  background: rgb(255, 244, 233);
+  border-radius: 10px;
+}
+.user {
+  width: 80%;
+  background-color: rgb(177, 177, 255);
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  margin-left: auto;
+  margin-right: 5px;
+}
+.ai {
+  width: 80%;
+  background-color: rgb(255, 182, 182);
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 5px;
 }
 </style>
