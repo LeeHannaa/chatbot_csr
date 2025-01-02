@@ -2,7 +2,6 @@
 import { ref } from 'vue'
 import { fetchChatbotResponse } from '../../api/chat_post'
 import { useConversationStore } from '../../stores/conversation'
-import FAQComponent from './FAQComponent.vue'
 
 const conversationStore = useConversationStore()
 const prompt = ref('') // 서버에 넘겨줄 질문
@@ -28,18 +27,13 @@ async function quest(question: string) {
     console.log(err)
   }
 }
-
-// FAQ 컴포넌트 표시/숨기기 상태 관리
-const isFAQVisible = ref(false)
-
-// FAQ 보기/숨기기 버튼 클릭 시, isFAQVisible 값을 토글합니다.
-function toggleFAQ() {
-  isFAQVisible.value = !isFAQVisible.value
-}
+defineProps<{
+  toggleFAQ: () => void
+  isFAQVisible: boolean
+}>()
 </script>
 
 <template>
-  <FAQComponent v-if="isFAQVisible" style="z-index: 10" />
   <div class="qna">
     <input
       class="question"
@@ -60,7 +54,6 @@ function toggleFAQ() {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 10px;
 }
 
 .question {
