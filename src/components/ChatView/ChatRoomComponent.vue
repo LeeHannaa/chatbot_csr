@@ -1,8 +1,33 @@
 <script setup lang="ts">
+import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
 import { useConversationStore } from '../../stores/conversation'
-import InputChatComponent from '../ChatView/InputChatComponent.vue'
 
 const conversationStore = useConversationStore()
+const chatContainer = ref<HTMLDivElement | null>(null)
+
+const handleScroll = () => {
+  if (!chatContainer.value) return
+}
+
+onMounted(() => {
+  if (chatContainer.value) {
+    chatContainer.value.addEventListener('scroll', handleScroll)
+  }
+})
+
+onBeforeUnmount(() => {
+  if (chatContainer.value) {
+    chatContainer.value.removeEventListener('scroll', handleScroll)
+  }
+})
+watch(
+  () => conversationStore.formattedConversation,
+  () => {
+    if (chatContainer.value) {
+      chatContainer.value.scrollTop = chatContainer.value.scrollHeight
+    }
+  },
+)
 defineProps<{
   toggleFAQ: () => void
   isFAQVisible: boolean
@@ -11,13 +36,12 @@ defineProps<{
 
 <template>
   <div class="room">
-    <div class="chatroom">
+    <div class="chatroom" ref="chatContainer">
       <p v-for="(item, index) in conversationStore.formattedConversation" :key="index">
         {{ item }}
       </p>
     </div>
   </div>
-  <InputChatComponent :isFAQVisible="isFAQVisible" :toggleFAQ="toggleFAQ" />
 </template>
 
 <style>
@@ -34,7 +58,7 @@ defineProps<{
 }
 .chatroom {
   width: 100%;
-  max-height: 500px;
+  max-height: 98%;
   overflow-y: auto;
   background: rgb(254, 254, 244);
 }

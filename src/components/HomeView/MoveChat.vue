@@ -2,11 +2,13 @@
 import { ref } from 'vue'
 import ChatRoomComponent from '../ChatView/ChatRoomComponent.vue'
 import FAQComponent from '../ChatView/FAQComponent.vue'
+import InputChatComponent from '../ChatView/InputChatComponent.vue'
 
 const chatIsOpen = ref(false)
 
 function toggleChat() {
   chatIsOpen.value = !chatIsOpen.value
+  if (isFAQVisible.value) toggleFAQ()
 }
 // FAQ 컴포넌트 표시/숨기기 상태 관리
 const isFAQVisible = ref(false)
@@ -21,6 +23,7 @@ function toggleFAQ() {
   <div style="text-align: center">
     <div v-if="chatIsOpen" class="chatbox">
       <ChatRoomComponent :isFAQVisible="isFAQVisible" :toggleFAQ="toggleFAQ" />
+      <InputChatComponent :isFAQVisible="isFAQVisible" :toggleFAQ="toggleFAQ" />
     </div>
     <FAQComponent v-if="isFAQVisible" :toggleFAQ="toggleFAQ" />
     <button class="movechatbot" @click="toggleChat">

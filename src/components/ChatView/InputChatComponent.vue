@@ -27,6 +27,9 @@ async function quest(question: string) {
     console.log(err)
   }
 }
+function reload() {
+  conversationStore.clearConversation()
+}
 defineProps<{
   toggleFAQ: () => void
   isFAQVisible: boolean
@@ -45,6 +48,9 @@ defineProps<{
     <button class="faqBT" @click="toggleFAQ">
       {{ isFAQVisible ? 'FAQ' : 'FAQ' }}
     </button>
+    <button class="reloadbutton" type="button" @click="reload">
+      <img src="../../assets/refresh.svg" style="width: 30px; height: 30px" />
+    </button>
   </div>
 </template>
 
@@ -59,7 +65,7 @@ defineProps<{
 .question {
   width: 70%;
   height: 50px;
-  margin-right: 12px;
+  margin-right: 5px;
   font-size: 12px;
   text-align: center;
   border: none;
@@ -74,12 +80,23 @@ defineProps<{
   border-radius: 50%;
   background: #fdf7edff;
   cursor: pointer;
-  margin-right: 10px;
+  margin-right: 8px;
 }
 .faqBT {
-  width: 50px;
+  width: 45px;
   height: 40px;
   border-radius: 15px;
+  border: none;
+  background: #ebf6f2;
+  color: rgb(43, 77, 37);
+  cursor: pointer;
+  font-size: 12px;
+  margin-right: 8px;
+}
+.reloadbutton {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
   border: none;
   background: #ebf6f2;
   color: rgb(43, 77, 37);

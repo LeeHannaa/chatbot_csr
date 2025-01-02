@@ -14,9 +14,14 @@ export const useConversationStore = defineStore('conversation', () => {
     conversation.value.push(message)
   }
 
+  function clearConversation() {
+    conversation.value = []
+  }
+
   return {
     conversation,
     formattedConversation,
     addMessage,
+    clearConversation,
   }
 })
