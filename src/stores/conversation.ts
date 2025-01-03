@@ -10,6 +10,18 @@ export const useConversationStore = defineStore('conversation', () => {
     })
   })
 
+  // function getConversation() {
+  //   const length = conversation.value.length
+  //   if (length < 3) {
+  //     return length > 0 ? conversation.value[length - 1] : ''
+  //   }
+  //   const input =
+  //     conversation.value[length - 3] +
+  //     conversation.value[length - 2] +
+  //     conversation.value[length - 1]
+  //   return input
+  // }
+
   function addMessage(message: string) {
     conversation.value.push(message)
   }

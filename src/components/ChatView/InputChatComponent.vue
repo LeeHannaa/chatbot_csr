@@ -12,10 +12,10 @@ async function quest(question: string) {
     console.log('질문이 입력되지 않았습니다.')
     return
   }
-  console.log('선택한 질문:', question)
   conversationStore.addMessage(question)
   prompt.value = ''
   try {
+    // const sendQ = conversationStore.getConversation()
     const data = await fetchChatbotResponse(question)
 
     if (data) {

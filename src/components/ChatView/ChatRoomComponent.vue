@@ -6,6 +6,13 @@ import { useConversationStore } from '../../stores/conversation'
 const conversationStore = useConversationStore()
 const chatContainer = ref<HTMLDivElement | null>(null)
 
+function formatAsHtml(text: string) {
+  const urlRegex = /(https?:\/\/[^\s]+)/g
+  return text.replace(urlRegex, (url) => {
+    return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`
+  })
+}
+
 const handleScroll = () => {
   if (!chatContainer.value) return
 }
@@ -26,11 +33,7 @@ watch(
   async () => {
     if (chatContainer.value !== null) {
       await nextTick()
-      console.log('chatContainer.value.scrollTop 전 : ', chatContainer.value.scrollTop)
-      console.log('chatContainer.value.scrollHeight 전 : ', chatContainer.value.scrollHeight)
       chatContainer.value.scrollTop = chatContainer.value.scrollHeight
-      console.log('chatContainer.value.scrollTop 후 : ', chatContainer.value.scrollTop)
-      console.log('chatContainer.value.scrollHeight 후 : ', chatContainer.value.scrollHeight)
     }
   },
 )
@@ -48,7 +51,10 @@ defineProps<{
         :key="index"
         :class="{ user: item.startsWith('Q:'), ai: item.startsWith('A:') }"
       >
-        {{ item }}
+        <!-- AI 메시지인 경우 링크 처리 -->
+        <span v-if="item.startsWith('A:')" v-html="formatAsHtml(item)"></span>
+        <!-- 사용자 메시지인 경우 일반 텍스트 출력 -->
+        <span v-else>{{ item }}</span>
       </div>
     </div>
   </div>
@@ -74,6 +80,15 @@ defineProps<{
   overflow-y: auto;
   background: rgb(255, 244, 233);
   border-radius: 10px;
+}
+.chatroom a {
+  color: #3498db; /* 링크 색상 */
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.chatroom a:hover {
+  color: #2c80b4; /* 마우스 오버 시 색상 */
 }
 .user {
   width: 80%;
