@@ -7,7 +7,7 @@ const conversationStore = useConversationStore()
 const chatContainer = ref<HTMLDivElement | null>(null)
 
 function formatAsHtml(text: string) {
-  const urlRegex = /(https?:\/\/[^\s]+)/g
+  const urlRegex = /(https?:\/\/[^\s\)]+)(?=\s|\)|$)/g // URL 뒤에 공백, 괄호 또는 끝이 올 때만 매칭
   return text.replace(urlRegex, (url) => {
     return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`
   })
@@ -91,7 +91,7 @@ defineProps<{
   color: #2c80b4; /* 마우스 오버 시 색상 */
 }
 .user {
-  width: 80%;
+  width: 75%;
   background-color: rgb(177, 177, 255);
   color: white;
   padding: 10px;
@@ -101,7 +101,7 @@ defineProps<{
   margin-right: 5px;
 }
 .ai {
-  width: 80%;
+  width: 85%;
   background-color: rgb(255, 182, 182);
   color: white;
   padding: 10px;
