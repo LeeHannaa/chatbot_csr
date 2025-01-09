@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import MoveChat from '../components/MoveChat.vue'
 import AnswerComponent from '../components/Question/AnswerComponent.vue'
+import { Question, QuestionData } from '../stores/questionData'
 
 const router = useRouter()
 function moveTest() {
@@ -10,11 +11,7 @@ function moveTest() {
 }
 
 const openQuestionId = ref<string | null>(null) // 현재 열려있는 질문의 id를 저장
-const questions = [
-  { id: 'icon', text: '아이콘 표시는 어떤 정보를 나타내나요?' },
-  { id: 'property', text: '매물 등록은 어떻게 하나요?' },
-  // 다른 질문들을 여기에 추가
-]
+
 function onClickQuestion(questionId: string) {
   if (openQuestionId.value === questionId) {
     openQuestionId.value = null
@@ -23,7 +20,7 @@ function onClickQuestion(questionId: string) {
   }
 }
 function getQuestionText(questionId: string) {
-  const question = questions.find((q) => q.id === questionId)
+  const question = QuestionData.find((q: Question) => q.id === questionId)
   return question ? question.text : ''
 }
 </script>
@@ -46,7 +43,7 @@ function getQuestionText(questionId: string) {
       />
     </div>
 
-    <div>
+    <div style="margin-left: 30%">
       매물 등록하기
       <img
         src="../assets/question.png"

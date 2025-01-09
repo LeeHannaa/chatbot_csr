@@ -2,13 +2,20 @@
 import { ref } from 'vue'
 import MoveChat from '../components/MoveChat.vue'
 import AnswerComponent from '../components/Question/AnswerComponent.vue'
+import { Question, QuestionData } from '../stores/questionData'
 
-const isOpenAnswerBox = ref(false)
-const question = ref('')
-function onClickQuestion(q: string) {
-  console.log(q)
-  question.value = q
-  isOpenAnswerBox.value = !isOpenAnswerBox.value
+const openQuestionId = ref<string | null>(null) // 현재 열려있는 질문의 id를 저장
+
+function onClickQuestion(questionId: string) {
+  if (openQuestionId.value === questionId) {
+    openQuestionId.value = null
+  } else {
+    openQuestionId.value = questionId
+  }
+}
+function getQuestionText(questionId: string) {
+  const question = QuestionData.find((q: Question) => q.id === questionId)
+  return question ? question.text : ''
 }
 </script>
 
@@ -21,12 +28,12 @@ function onClickQuestion(q: string) {
         <img
           src="../assets/question.png"
           style="width: 20px; height: 20px; cursor: pointer"
-          @click="onClickQuestion('매물인쇄는 어떻게 하나요?')"
+          @click="onClickQuestion('print')"
         />
         <AnswerComponent
-          :question="question"
-          :isOpenAnswerBox="isOpenAnswerBox"
-          v-if="isOpenAnswerBox"
+          :question="getQuestionText('print')"
+          :isOpenAnswerBox="openQuestionId === 'print'"
+          v-if="openQuestionId === 'print'"
         />
       </div>
       <img src="../assets/openChat.png" style="width: 100%" />
