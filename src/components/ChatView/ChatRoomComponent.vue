@@ -107,5 +107,6 @@ defineProps<{
   padding: 10px;
   border-radius: 5px;
   margin-bottom: 5px;
+  word-wrap: break-word;
 }
 </style>
