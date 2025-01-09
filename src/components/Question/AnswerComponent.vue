@@ -44,8 +44,11 @@ onMounted(() => {
 
 <template>
   <div class="answerBox">
-    <span v-if="isLoading">'{{ question }}'에 대한 답변을 준비중입니다...</span>
-    <span v-else v-html="formatAsHtml(answer)"></span>
+    <div v-if="isLoading">
+      <p>'{{ question }}'에 대한 답변을 준비중입니다.</p>
+      <img src="../../assets/loding.gif" style="width: 50px; height: 50px; margin-top: 20px" />
+    </div>
+    <div v-else v-html="formatAsHtml(answer)"></div>
   </div>
 </template>
 
