@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, defineProps } from 'vue'
-import { fetchChatbotResponse } from '../../api/chat_post'
+import { fetchQuestionResponse } from '../../api/chat_post'
 
 const isLoading = ref(false)
 const answer = ref('')
@@ -21,7 +21,7 @@ async function quest(question: string) {
   isLoading.value = true
   answer.value = ''
   try {
-    const data = await fetchChatbotResponse(question)
+    const data = await fetchQuestionResponse(question)
     if (data) {
       console.log('성공적인 답변 확인 : ', data)
       answer.value = data
