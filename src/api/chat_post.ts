@@ -5,7 +5,7 @@ export const fetchChatbotResponse = async (question: string) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ prompt: question }),
+      body: JSON.stringify({ question: question }),
     })
 
     if (!response.ok) {
@@ -20,14 +20,14 @@ export const fetchChatbotResponse = async (question: string) => {
   }
 }
 
-export const fetchQuestionResponse = async (question: string) => {
+export const fetchQuestionResponse = async (questionId: string, question: string) => {
   try {
     const response = await fetch('http://127.0.0.1:5000/api/question', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ prompt: question }),
+      body: JSON.stringify({ id: questionId, question: question }),
     })
 
     if (!response.ok) {

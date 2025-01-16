@@ -37,6 +37,7 @@ function getQuestionText(questionId: string) {
         @click="onClickQuestion('icon')"
       />
       <AnswerComponent
+        :questionId="'icon'"
         :question="getQuestionText('icon')"
         :isOpenAnswerBox="openQuestionId === 'icon'"
         v-if="openQuestionId === 'icon'"
@@ -51,6 +52,7 @@ function getQuestionText(questionId: string) {
         @click="onClickQuestion('property')"
       />
       <AnswerComponent
+        :questionId="'property'"
         :question="getQuestionText('property')"
         :isOpenAnswerBox="openQuestionId === 'property'"
         v-if="openQuestionId === 'property'"

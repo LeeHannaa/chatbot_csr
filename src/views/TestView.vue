@@ -31,6 +31,7 @@ function getQuestionText(questionId: string) {
           @click="onClickQuestion('print')"
         />
         <AnswerComponent
+          :questionId="'print'"
           :question="getQuestionText('print')"
           :isOpenAnswerBox="openQuestionId === 'print'"
           v-if="openQuestionId === 'print'"
